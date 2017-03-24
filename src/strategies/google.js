@@ -2,16 +2,16 @@ import GoogleOauthStrategy from 'passport-google-oauth20';
 import settings from '../../settings.json';
 import saving from '../helpers/profile-saving';
 
+const transform = profile => ({ ...profile._json, name: profile.displayName, username: `google|${profile.id}` })
+
 export default new GoogleOauthStrategy(
   {
     clientID: settings.providers.google.client,
     clientSecret: settings.providers.google.secret,
     callbackURL: 'http://localhost:5050/a/callback',
   },
-  (accessToken, refreshToken, params, profile, cb) => {
-    console.log(profile);
-    saving(profile, { provider: 'google' })
-      .then(user => cb(null, user))
-      .catch(error => cb(error, null));
-  },
+  (accessToken, refreshToken, params, profile, cb) =>
+    saving(profile, { provider: 'google', transform })
+    .then(user => cb(null, user))
+    .catch(error => cb(error, null)),
 );
