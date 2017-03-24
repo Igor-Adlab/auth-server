@@ -2,3 +2,5 @@
 node_modules
 env/development.env
 env/test.env
+settings.json
+*.settings.json
