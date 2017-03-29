@@ -15,6 +15,7 @@ import tokenize from './middleware/before-auth';
 import callback from './middleware/callback';
 import result from './middleware/result';
 import strategies from './strategies';
+import routes from './routes';
 
 Mongoose.Promise = Promise;
 Mongoose.connect(process.env.MONGO_URL);
@@ -50,6 +51,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(routes);
+
 app.get('/', (req, res) => res.json({ ok: true, auth: req.user }));
 app.get('/logout', (req, res) => {
   req.logout();
@@ -59,7 +62,7 @@ app.get('/logout', (req, res) => {
 passport.use(strategies.local);
 Object.keys(strategies.oauth).forEach(provider => passport.use(strategies.oauth[provider]));
 
-app.get('/auth/:provider', tokenize(process.env.APPLICATION_SECRET), auth);
+app.get('/auth/:provider?', tokenize(process.env.APPLICATION_SECRET), auth);
 
 app.get('/a/callback', callback(process.env.APPLICATION_SECRET), redirect(process.env.APPLICATION_SECRET));
 app.post('/a/local', tokenize(process.env.APPLICATION_SECRET, 'local'), passport.authenticate('local', { session: false }), redirect(process.env.APPLICATION_SECRET, r => r.token));
