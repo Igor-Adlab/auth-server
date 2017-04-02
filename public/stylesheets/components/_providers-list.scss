@@ -1,0 +1,37 @@
+.providers-list {
+  display: flex;
+
+  &.-horizontal {
+    flex-direction: row;
+    justify-content: center;
+    li {
+      margin-right: 15px;
+      &:last-child {
+        margin-right: 0;
+      }
+      .oauth-provider {
+        span {
+          text-indent: 9999;
+          display:inline-block;
+          color: transparent;
+        }
+      }
+    }
+  }
+
+  &.-vertical {
+    flex-direction: column;
+    li {
+      margin-bottom: 15px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .oauth-provider {
+        span {
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+}

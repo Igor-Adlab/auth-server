@@ -12,6 +12,6 @@ export default new TwitterStrategy(
   },
   (accessToken, refreshToken, params, profile, cb) =>
     saving(profile, { provider: 'twitter', transform })
-      .then(user => cb(null, user))
-      .catch(error => cb(null, error)),
+      .then(user => cb(null, Object.assign(user, { access_token: accessToken })))
+      .catch(error => cb(error, null)),
 );

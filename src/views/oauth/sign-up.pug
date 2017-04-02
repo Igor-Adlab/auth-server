@@ -1,0 +1,31 @@
+extends layout.pug
+
+block header
+    h4.panel-title.text-center Sign Up
+
+block content
+    for message in (flash || [])
+        .alert(class='alert-' + message.type)
+            p= message.message
+    include oauth.pug
+    if settings.local.signup
+        hr
+        form(action=`/oauth/sign-up?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}`, method='POST')
+            div.form-group
+                input.form-control(name='name', required=true, type='text', placeholder='Name')
+            div.form-group
+                input.form-control(name='username', required=true, type='text', placeholder='Username')
+            each input in (settings.fields || [])
+                div.form-group
+                    input.form-control(name=`profile[${input.name}]`, required=input.required type=input.type, placeholder=input.placeholder)
+            div.form-group
+                input.form-control(name='password', required=true, type='password', placeholder='Password')
+            div.form-group
+                button(type='submit').btn.btn-primary.btn-block Sign Up
+            div.form-group
+                a(href=`/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}`).btn.btn-link.pull-right Have account?
+    else
+        if settings.local.signin
+            hr
+            .alert.alert-info.text-center Unfortunately registration disabled now.
+            a.btn.btn-primary.btn-block(href=`/oauth/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}`) Sign In

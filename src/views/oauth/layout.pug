@@ -1,0 +1,18 @@
+html
+    head
+        link(href="/stylesheets/styles.css", rel="stylesheet")
+        link(href="/pkg/packages.css", rel="stylesheet")
+        link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet")
+    body#auth-page
+        div#auth-container.container
+            br
+            div.panel.panel-default
+                div.panel-heading
+                    block header
+                div.panel-body
+                    block content
+                div.panel-footer.text-center
+                    button.btn.btn-link
+                        i.glyphicon.glyphicon-info-sign
+                        =' AuthServer'
+        script(src="/js/vue-test.js")

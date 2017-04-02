@@ -1,0 +1,23 @@
+extends layout.pug
+
+block header
+    h4.panel-title.text-center Sign In
+
+block content
+    for message in (flash || [])
+        .alert(class='alert-' + message.type)
+            p= message.message
+    include oauth.pug
+    if settings.local.signin
+        hr
+        form(action=`/a/local?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}`, method='POST')
+            .form-group
+                input.form-control(name='username', type='text', placeholder='Username')
+            .form-group
+                input.form-control(name='password', type='password', placeholder='Password...')
+            .form-group
+                button(type='submit').btn.btn-primary.btn-block Sign In
+            .form-group
+                button(type='button').btn.btn-link.pull-left Forgot Password?
+                if settings.local.signup
+                    a(href=`/oauth/sign-up?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=${response_type}`).btn.btn-link.pull-right Have not account?

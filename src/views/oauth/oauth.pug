@@ -1,0 +1,9 @@
+ul(class=`list-unstyled providers-list ${ providers && providers.length >= 5 ? '-vertical' : '-horizontal' }`)
+    each provider in (providers || [])
+        li
+            a(
+            class=`oauth-provider btn ${ providers && providers.length >= 5 ? 'btn-social' : 'btn-social-icon btn-lg' } btn-block btn-${provider}`
+            href=`/auth/${provider}?redirect_uri=${redirect_uri}&response_type=${response_type}&client_id=${client_id}`
+            )
+                i(class=`fa fa-${provider}`)
+                span=provider

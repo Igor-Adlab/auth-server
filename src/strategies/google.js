@@ -12,6 +12,6 @@ export default new GoogleOauthStrategy(
   },
   (accessToken, refreshToken, params, profile, cb) =>
     saving(profile, { provider: 'google', transform })
-    .then(user => cb(null, user))
+    .then(user => cb(null, Object.assign(user, { access_token: accessToken })))
     .catch(error => cb(error, null)),
 );

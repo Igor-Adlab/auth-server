@@ -9,8 +9,11 @@ const SocialConnectSchema = new Schema({
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
+  profile: { type: Object, default: {} },
   emails: { type: [String] },
   connects: { type: [SocialConnectSchema] },
+  access_token: { type: String },
+  provider: { type: String },
 });
 
 UserSchema.plugin(PassportMongoose, {});

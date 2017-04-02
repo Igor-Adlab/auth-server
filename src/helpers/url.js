@@ -1,7 +1,7 @@
-import { URL } from 'url';
+import { format, parse } from 'url';
+import querystring from 'querystring';
 
 export default (base, params = {}) => {
-  const url = new URL(base);
-  Object.keys(params).forEach(key => url.searchParams.set(key, params[key]));
-  return url.toString();
+  const search = querystring.stringify(params);
+  return format({ ...parse(base), search }).toString();
 };

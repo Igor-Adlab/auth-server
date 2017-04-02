@@ -7,9 +7,9 @@ import settings from '../../settings.json';
 export default secret => (req, res, next) => {
   const { state } = req.query;
   const url = resolve(settings.domain, '/a/result');
-  const { provider } = jwt.verify(state, secret);
+  const { provider, callbackUrl } = jwt.verify(state, secret);
   passport.authenticate(provider, {
     session: false,
-    failureRedirect: format(url, { state, success: false }),
+    failureRedirect: format(callbackUrl || url, { state, success: false }),
   })(req, res, next);
 };
